@@ -88,5 +88,10 @@ if wifi_connected:
 else:
     print("Skipping update check due to WiFi failure.")
 
+
+# Set WiFi to off
+sta_if = network.WLAN(network.STA_IF)
+sta_if.active(False)
+
 # Set LED to off (or to a state that indicates transition to main.py)
 set_led(0)
