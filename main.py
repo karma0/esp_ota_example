@@ -3,12 +3,12 @@ import secrets
 import sys
 
 def main():
-    if secrets.DEVICE_TYPE == 'RC':
+    if secrets.DEVICE_ROLE == 'RC':
         module_name = 'rc'
-    elif secrets.DEVICE_TYPE == 'ROV':
+    elif secrets.DEVICE_ROLE == 'ROV':
         module_name = 'rov'
     else:
-        print('Invalid DEVICE_TYPE specified in secrets.py.')
+        print('Invalid DEVICE_ROLE specified in secrets.py.')
         sys.exit(1)
 
     try:
