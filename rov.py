@@ -1,20 +1,50 @@
-# rov.py
-import machine
+from machine import Pin, PWM
 import time
 
-def run():
-    led_pin = 2  # GPIO2 for onboard LED
-    pwm = machine.PWM(machine.Pin(led_pin), freq=1000)
+# Initialize digital output pins
+d13 = Pin(13, Pin.OUT)
+d14 = Pin(14, Pin.OUT)
 
-    try:
-        while True:
-            # Fade in
-            for duty in range(0, 1024, 10):
-                pwm.duty(duty)
-                time.sleep(0.01)
-            # Fade out
-            for duty in range(1023, -1, -10):
-                pwm.duty(duty)
-                time.sleep(0.01)
-    except KeyboardInterrupt:
-        pwm.deinit()
+# Initialize PWM on GPIO12 with a frequency of 1000 Hz
+pwm_pin = PWM(Pin(12), freq=1000)
+
+# Define duty cycle range for 10-bit resolution (0-1023)
+duty_min = 0
+duty_max = 1023
+step = 10  # Adjust step for smoother or faster transitions
+
+try:
+    while True:
+        # Set D13 HIGH and D14 LOW
+        d13.value(1)
+        d14.value(0)
+
+        # Fade in
+        for duty in range(duty_min, duty_max + 1, step):
+            pwm_pin.duty(duty)
+            time.sleep(0.01)  # Adjust delay for desired speed
+
+        # Fade out
+        for duty in range(duty_max, duty_min - 1, -step):
+            pwm_pin.duty(duty)
+            time.sleep(0.01)
+
+        # Swap D13 and D14 states: D13 LOW, D14 HIGH
+        d13.value(0)
+        d14.value(1)
+
+        # Fade in
+        for duty in range(duty_min, duty_max + 1, step):
+            pwm_pin.duty(duty)
+            time.sleep(0.01)
+
+        # Fade out
+        for duty in range(duty_max, duty_min - 1, -step):
+            pwm_pin.duty(duty)
+            time.sleep(0.01)
+
+except KeyboardInterrupt:
+    # Clean up on interrupt
+    pwm_pin.deinit()
+    d13.value(0)
+    d14.value(0)
