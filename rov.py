@@ -5,8 +5,8 @@ import time
 d13 = Pin(13, Pin.OUT)
 d14 = Pin(14, Pin.OUT)
 
-# Initialize PWM on GPIO12 with a frequency of 1000 Hz
-pwm_pin = PWM(Pin(12), freq=1000)
+# Initialize PWM on GPIO27 with a frequency of 1000 Hz
+pwm_pin = PWM(Pin(27), freq=1000)
 
 # Define duty cycle range for 10-bit resolution (0-1023)
 duty_min = 0
