@@ -1,14 +1,16 @@
 # main.py
-import secrets
+# import secrets
 import sys
 
+DEVICE_ROLE = 'RC'
+
 def main():
-    if secrets.DEVICE_ROLE == 'RC':
+    if DEVICE_ROLE == 'RC':
         module_name = 'rc'
-    elif secrets.DEVICE_ROLE == 'ROV':
+    elif DEVICE_ROLE == 'ROV':
         module_name = 'rov'
     else:
-        print('Invalid DEVICE_ROLE specified in secrets.py.')
+        print('Invalid DEVICE_ROLE specified in py.')
         sys.exit(1)
 
     try:

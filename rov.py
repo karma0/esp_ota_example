@@ -13,7 +13,11 @@ duty_min = 0
 duty_max = 1023
 step = 10  # Adjust step for smoother or faster transitions
 
+debug_interval = 1000
+
 try:
+    interval_counter = 0
+
     while True:
         # Set D13 HIGH and D14 LOW
         d13.value(1)
@@ -42,6 +46,11 @@ try:
         for duty in range(duty_max, duty_min - 1, -step):
             pwm_pin.duty(duty)
             time.sleep(0.01)
+        
+        # DEBUG OUTPUT
+        if interval_counter % debug_interval == 0:
+            print(f"Interval: {interval_counter}")
+        interval_counter += 1
 
 except KeyboardInterrupt:
     # Clean up on interrupt
